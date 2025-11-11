@@ -7,7 +7,7 @@ from telegram.ext import (
 )
 import gspread
 from google.oauth2.service_account import Credentials
-from data.token_key import TELEGRAM_TOKEN
+#from data.token_key import TELEGRAM_TOKEN
 
 # Detectar si estamos en Render
 IS_RENDER = os.path.exists("/etc/secrets")
