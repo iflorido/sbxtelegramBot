@@ -9,13 +9,33 @@ import gspread
 from google.oauth2.service_account import Credentials
 from data.token_key import TELEGRAM_TOKEN
 
+# Detectar si estamos en Render
+IS_RENDER = os.path.exists("/etc/secrets")
+
+# Definir rutas seguras según el entorno
+if IS_RENDER:
+    BASE_PATH = "/etc/secrets"
+else:
+    BASE_PATH = "data"
+    
+# Cargar token desde el archivo secreto
+import importlib.util
+token_path = os.path.join(BASE_PATH, "token_key.py")
+spec = importlib.util.spec_from_file_location("token_key", token_path)
+token_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(token_module)
+TELEGRAM_TOKEN = token_module.TELEGRAM_TOKEN
+
+
 # ------------------ CONFIGURACIÓN ------------------
-JSON_FILE = "data/clientes.json"
+# Archivos JSON y credenciales
+JSON_FILE = os.path.join(BASE_PATH, "clientes.json")
+CREDENTIALS_FILE = os.path.join(BASE_PATH, "credentials_google.json")
 
 # Configurar acceso a Google Sheets
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", 
           "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_file("data/credentials_google.json", scopes=SCOPES)
+creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPES)
 gc = gspread.authorize(creds)
 sheet = gc.open("Leads_ServiceboxBot").sheet1
 
@@ -239,5 +259,22 @@ def main():
     app.run_polling()
 
 
+# --- Mantener el servicio activo en Render ---
+import threading
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "🤖 Telegram bot is running on Render!"
+
+def run_flask():
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
 if __name__ == "__main__":
-    main()
+    # Arranca el bot en un hilo
+    threading.Thread(target=main).start()
+    # Arranca el servidor Flask en el hilo principal
+    run_flask()
