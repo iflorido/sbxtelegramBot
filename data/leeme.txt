@@ -1,0 +1,13 @@
+Aquí debemos añadir dos tres archivos 
+
+data/token_key.py
+data/clientes.json
+data/credentials_google.json
+
+En token_key.py nuestro token de Telegram 
+TELEGRAM_TOKEN = "TOKEN_KEY"
+
+clientes.json
+Creamos este archivo para guardar información que nos va llegando
+
+Aquí debemos añadir nuestra credencial de aplicación de Google Sheet y crear una hoja, en la linea 20 debemos indicar el nombre de esa hoja. Los encabezados serán Fecha 	Servicio	Respuestas	 Nombre 	Teléfono	Email

@@ -15,7 +15,7 @@ JSON_FILE = "data/clientes.json"
 # Configurar acceso a Google Sheets
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", 
           "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_file("data/n8n-server-princiap-3b74e46b57cd.json", scopes=SCOPES)
+creds = Credentials.from_service_account_file("data/credentials_google.json", scopes=SCOPES)
 gc = gspread.authorize(creds)
 sheet = gc.open("Leads_ServiceboxBot").sheet1
 
