@@ -258,5 +258,16 @@ def main():
     app.add_handler(conv_handler)
     app.run_polling()
 
+from flask import Flask
+import os, threading
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "🤖 Bot activo"
+
 if __name__ == "__main__":
+    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))).start()
+    main()  # Ejecuta tu bot
     main()
