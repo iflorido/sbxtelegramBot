@@ -17,7 +17,8 @@ if IS_RENDER:
     BASE_PATH = "/etc/secrets"
 else:
     BASE_PATH = "data"
-    
+
+BASE_PATH_JSON = "data"
 # Cargar token desde el archivo secreto
 import importlib.util
 token_path = os.path.join(BASE_PATH, "token_key.py")
@@ -29,7 +30,7 @@ TELEGRAM_TOKEN = token_module.TELEGRAM_TOKEN
 
 # ------------------ CONFIGURACIÓN ------------------
 # Archivos JSON y credenciales
-JSON_FILE = os.path.join(BASE_PATH, "clientes.json")
+JSON_FILE = os.path.join(BASE_PATH_JSON, "clientes.json")
 CREDENTIALS_FILE = os.path.join(BASE_PATH, "credentials_google.json")
 
 # Configurar acceso a Google Sheets

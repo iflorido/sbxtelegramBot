@@ -53,7 +53,6 @@ coverage.xml
 cover/
 data/n8n-server-princiap-3b74e46b57cd.json
 data/token_key.py
-data/clientes.json
 data/credentials_google.json
 # Translations
 *.mo
