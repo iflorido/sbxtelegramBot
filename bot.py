@@ -258,23 +258,5 @@ def main():
     app.add_handler(conv_handler)
     app.run_polling()
 
-
-# --- Mantener el servicio activo en Render ---
-import threading
-from flask import Flask
-import os
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "🤖 Telegram bot is running on Render!"
-
-def run_flask():
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
-
 if __name__ == "__main__":
-    # Arranca el bot en un hilo
-    threading.Thread(target=main).start()
-    # Arranca el servidor Flask en el hilo principal
-    run_flask()
+    main()
