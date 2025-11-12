@@ -1,4 +1,5 @@
 import json, os
+import re 
 import datetime
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -157,6 +158,12 @@ async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return CONTACTO
 
     elif paso == "email":
+        # ✅ Validar el formato del correo electrónico
+        if not re.match(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$", texto):
+            await update.message.reply_text("⚠️ El formato del correo no parece válido. Por favor, escribe un correo como *nombre@dominio.com*.", parse_mode="Markdown")
+            return CONTACTO  # vuelve a pedir el correo
+
+        # Si el correo es válido, lo guarda y sigue
         context.user_data["contacto"]["email"] = texto
         return await finalizar_guardado(update, context)
 
