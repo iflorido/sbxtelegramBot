@@ -273,7 +273,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "🤖 Bot activo"
+    return "🤖 Bot activo y funcionando"
 
 if __name__ == "__main__":
     threading.Thread(target=lambda: app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))).start()
